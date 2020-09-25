@@ -52,7 +52,7 @@
             <ul>
             {% if store['stock']|length > 0 %}
                 {% for card in store['stock'] %}
-                    <li><a href="{{ card['url'] }}">{{card['description']}}</a></li>
+                    <li><a href="{{ card['url'] }}" target="_blank">{{card['description']}}</a></li>
                 {% endfor %}
             {% else %}
                 <li><h3>Nothing</h3></li>
@@ -63,7 +63,7 @@
             <ul>
             {% if store['nostock']|length > 0 %}
                 {% for card in store['nostock'] %}
-                    <li><a href="{{ card['url'] }}">{{card['description']}}</a></li>
+                    <li><a href="{{ card['url'] }}" target="_blank">{{card['description']}}</a></li>
                 {% endfor %}
             {% else %}
                 <li>Nothing</li>
