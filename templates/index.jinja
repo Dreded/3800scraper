@@ -6,7 +6,7 @@
 
         <style>
             .button {
-                background-color: {{ buttoncolor }}; /* #0099FF = Blue, #4CAF50 = green */
+                background-color: {% if audio == False %}green{% else %}red{% endif %}; /* #0099FF = Blue, #4CAF50 = green */
                 border: none;
                 color: white;
                 padding: 15px 32px;
@@ -21,18 +21,30 @@
         </style>
     </head>
     <body>
+        {% if audio %}
+            Audio Enabled
+        {% else %}
+            Audio Disabled
+        {% endif %}
         <form method="post">
-            <input type="hidden" name="audio" value='Audio_Clicked'>
-            <button type="submit" id=btn class="button">Enable Audio</button>
+            {% if audio == True %}
+                <input type="hidden" name="audio" value='Disable_Audio'>
+                <button type="submit" id=btn class="button">Disable Audio</button>
+            {% else %}
+                <input type="hidden" name="audio" value='Enable_Audio'>
+                <button type="submit" id=btn class="button">Enable Audio</button>
+            {% endif %}
         </form>
         <h3>Refreshed {{refreshed}} times</h3>
         {% for store in stores.values() %}
             <h1>
                 {{store['store_name']}}
                 {% if store['has_stock'] %}
-                    <audio autoplay>
-                        <source src="{{ url_for('static', filename='mlg-airhorn.mp3') }}">
-                    </audio>
+                    {% if audio %}
+                        <audio autoplay>
+                            <source src="{{ url_for('static', filename='mlg-airhorn.mp3') }}">
+                        </audio>
+                    {% endif %}
                     <span> - <b>Has Stock</b></span>
                 {% endif %}
             </h1>

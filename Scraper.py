@@ -15,14 +15,12 @@ def index():
     if newRun:
         session['audio'] = False
         newRun = False
-        buttoncolor = '#0099FF'
 
     if request.method == 'POST':
-        if request.form['audio'] == 'Audio_Clicked':
+        if request.form['audio'] == 'Enable_Audio':
             session['audio'] = True
-
-    if session['audio'] == True:
-            buttoncolor = '#4CAF50'
+        elif request.form['audio'] == 'Disable_Audio':
+            session['audio'] = False
 
     if 'counter' in session:
         session['counter'] += 1
@@ -38,7 +36,6 @@ def index():
         'stores': stores,
         'refreshed': session['counter'],
         'audio': session['audio'],
-        'buttoncolor': buttoncolor
     }
     return render_template('index.jinja', **context)
 
