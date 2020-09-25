@@ -2,7 +2,6 @@ from flask import Flask, render_template, session, request
 from flaskwebgui import FlaskUI   # get the FlaskUI class
 
 import glob
-plugins = glob.glob('./store_plugins/store_*.py')
 
 app = Flask(__name__)
 app.secret_key = 'app secret key'
@@ -27,6 +26,8 @@ def index():
     else:
         session['counter'] = 1
     stores = {}
+    
+    plugins = glob.glob('./store_plugins/store_*.py')
     for plugin in plugins:
         get_stock = __import__(plugin[2:-3].replace('\\','.'), fromlist=[None]).get_stock
         stores[plugin[22:-3]] = get_stock()
