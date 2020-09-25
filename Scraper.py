@@ -1,5 +1,8 @@
 from flask import Flask, render_template, session, request
 from flaskwebgui import FlaskUI   # get the FlaskUI class
+import sys
+sys.stdout = open('log.txt', 'w')
+sys.stderr = open('err.txt', 'w')
 
 import glob
 
@@ -26,7 +29,7 @@ def index():
     else:
         session['counter'] = 1
     stores = {}
-    
+
     plugins = glob.glob('./store_plugins/store_*.py')
     for plugin in plugins:
         get_stock = __import__(plugin[2:-3].replace('\\','.'), fromlist=[None]).get_stock
@@ -39,5 +42,5 @@ def index():
         'audio': session['audio'],
     }
     return render_template('index.jinja', **context)
-
-ui.run()                           # call the 'run' method 
+if __name__ == '__main__':
+    ui.run()                           # call the 'run' method 
