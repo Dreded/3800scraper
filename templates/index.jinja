@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv='refresh' content='20'>
+        <title>{{title}}</title>
+
+        <style>
+            .button {
+                background-color: {{ buttoncolor }}; /* #0099FF = Blue, #4CAF50 = green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+            }
+            .button:hover {
+                box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+        </style>
+    </head>
+    <body>
+        <form method="post">
+            <input type="hidden" name="audio" value='Audio_Clicked'>
+            <button type="submit" id=btn class="button">Enable Audio</button>
+        </form>
+        <h3>Refreshed {{refreshed}} times</h3>
+        {% for store in stores.values() %}
+            <h1>
+                {{store['store_name']}}
+                {% if store['has_stock'] %}
+                    <audio autoplay>
+                        <source src="{{ url_for('static', filename='mlg-airhorn.mp3') }}">
+                    </audio>
+                    <span> - <b>Has Stock</b></span>
+                {% endif %}
+            </h1>
+            <h2>Has Stock of...</h2>
+            <ul>
+            {% if store['stock']|length > 0 %}
+                {% for card in store['stock'] %}
+                    <li><a href="{{ card['url'] }}">{{card['description']}}</a></li>
+                {% endfor %}
+            {% else %}
+                <li><h3>Nothing</h3></li>
+            {% endif %}
+            </ul>
+
+            <h2>Has No Stock of...</h2>
+            <ul>
+            {% if store['nostock']|length > 0 %}
+                {% for card in store['nostock'] %}
+                    <li><a href="{{ card['url'] }}">{{card['description']}}</a></li>
+                {% endfor %}
+            {% else %}
+                <li>Nothing</li>
+            {% endif %}
+            </ul>
+        {% endfor %}
+    </body>
+</html>
