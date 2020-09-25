@@ -1,8 +1,5 @@
 from flask import Flask, render_template, session, request
 from flaskwebgui import FlaskUI   # get the FlaskUI class
-import sys
-sys.stdout = open('log.txt', 'w')
-sys.stderr = open('err.txt', 'w')
 
 import glob
 
