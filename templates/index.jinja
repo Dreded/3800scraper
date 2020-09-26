@@ -32,8 +32,8 @@
     {% endblock %}
         {% block main %}
         {% for store in stores.values() %}
-            <h1>
-                {{store['store_name']}}
+        <div class="pt-3">
+                <hr data-content="{{store['store_name']}}" class="hr-text">
                 {% if store['has_stock'] %}
                     {% if audio %}
                         <audio autoplay>
@@ -42,7 +42,7 @@
                     {% endif %}
                     <span> - <b>Has Stock</b></span>
                 {% endif %}
-            </h1>
+                </div>
             <div class="pl-3">
             <h2>Has Stock of...</h2>
                 <ul>
@@ -51,7 +51,7 @@
                         <li><a href="{{ card['url'] }}" target="_blank">{{card['description']}}</a></li>
                     {% endfor %}
                 {% else %}
-                    <li><h3>Nothing</h3></li>
+                    <li>Nothing</li>
                 {% endif %}
                 </ul>
 
