@@ -1,13 +1,41 @@
-store_name = "Test Store"
+from bs4 import BeautifulSoup
+
+import os
+scriptPath = os.path.dirname(os.path.abspath(__file__))
+print(scriptPath)
+
+store_name = "The Test Store"
 
 
 def get_stock():
+    page = ""
+    with open(scriptPath + "\\test_store.html",'r',encoding='utf-8') as f:
+        page = f.read()
+    #pass the HTML to Beautifulsoup.
+    soup = BeautifulSoup(page,'html.parser')
+
+    main_table = soup.find("div",attrs={'class':'item-cells-wrap'})
+    cards = main_table.find_all("div", class_="item-container")
     store = {
         'store_name': store_name,
-        'has_stock': True,
-        'nostock': [{'description': 'GeForce RTX 3080 Ventus OC 10GB PCI-E w/ HDMI, Triple DP', 'url': 'https://www.memoryexpress.com/Products/MX00113956'}, {'description': 'GeForce RTX 3080 XC3 ULTRA GAMING 10GB PCI-E w/ HDMI, Triple DP', 'url': 'https://www.memoryexpress.com/Products/MX00113972'}, {'description': 'GeForce RTX™ 3080 Gaming OC 10GB Triple Fan  PCI-E 4.0 w/ Triple DP, Dual HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00113954'}, {'description': 'GeForce RTX™ 3080 Eagle OC 10GB Triple Fan  PCI-E 4.0 w/ Triple DP, Dual HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00113955'}, {'description': 'GeForce RTX 3080 Gaming X Trio 10GB PCI-E w/ HDMI, Triple DP', 'url': 'https://www.memoryexpress.com/Products/MX00113957'}, {'description': 'GeForce RTX™ 3080 FTW3 Ultra Gaming  10GB Triple Fan  PCI-E 4.0 w/ Triple DP, HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114024'}, {'description': 'GeForce RTX™ 3080 TUF 10G Gaming Triple Fan  PCI-E 4.0 w/ Triple DP, Dual HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114004'}, {'description': 'GeForce RTX™ 3080 TUF O10G Gaming Triple Fan  PCI-E 4.0 w/ Triple DP, Dual HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114003'}, {'description': 'GeForce RTX™ 3080 XC3 Black Gaming  10GB ICX3 Triple Fan  PCI-E 4.0 w/ Triple DP, HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114094'}, {'description': 'GeForce RTX™ 3080 XC3 Gaming 10GB ICX3 Triple Fan  PCI-E 4.0 w/ Triple DP, HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114095'}, {'description': 'ROG STRIX GeForce RTX 3080 O10G Gaming 10GB PCI-E w/ Dual HDMI, Triple DP', 'url': 'https://www.memoryexpress.com/Products/MX00114092'}],
-        'stock': [{'description': 'GeForce RTX 3080 Ventus OC 10GB PCI-E w/ HDMI, Triple DP', 'url': 'https://www.memoryexpress.com/Products/MX00113956'}, {'description': 'GeForce RTX 3080 XC3 ULTRA GAMING 10GB PCI-E w/ HDMI, Triple DP', 'url': 'https://www.memoryexpress.com/Products/MX00113972'}, {'description': 'GeForce RTX™ 3080 Gaming OC 10GB Triple Fan  PCI-E 4.0 w/ Triple DP, Dual HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00113954'}, {'description': 'GeForce RTX™ 3080 Eagle OC 10GB Triple Fan  PCI-E 4.0 w/ Triple DP, Dual HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00113955'}, {'description': 'GeForce RTX 3080 Gaming X Trio 10GB PCI-E w/ HDMI, Triple DP', 'url': 'https://www.memoryexpress.com/Products/MX00113957'}, {'description': 'GeForce RTX™ 3080 FTW3 Ultra Gaming  10GB Triple Fan  PCI-E 4.0 w/ Triple DP, HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114024'}, {'description': 'GeForce RTX™ 3080 TUF 10G Gaming Triple Fan  PCI-E 4.0 w/ Triple DP, Dual HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114004'}, {'description': 'GeForce RTX™ 3080 TUF O10G Gaming Triple Fan  PCI-E 4.0 w/ Triple DP, Dual HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114003'}, {'description': 'GeForce RTX™ 3080 XC3 Black Gaming  10GB ICX3 Triple Fan  PCI-E 4.0 w/ Triple DP, HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114094'}, {'description': 'GeForce RTX™ 3080 XC3 Gaming 10GB ICX3 Triple Fan  PCI-E 4.0 w/ Triple DP, HDMI', 'url': 'https://www.memoryexpress.com/Products/MX00114095'}, {'description': 'ROG STRIX GeForce RTX 3080 O10G Gaming 10GB PCI-E w/ Dual HDMI, Triple DP', 'url': 'https://www.memoryexpress.com/Products/MX00114092'}],
+        'has_stock': False,
+        'nostock':[],
+        'stock':[],
     }
+    for card in cards: 
+        description = card.find("a", class_="item-title").text
+        url = card.find("a", class_="item-title")['href']
+        status = card.find("div", class_="item-button-area").text
+        if "3080" in description:
+            record = {
+                'description':description,
+                'url':url
+            }
+            if "Add" in status:
+                store['has_stock'] = True
+                store['stock'].append(record)
+            else:
+                store['nostock'].append(record)
     return store
 
 def printIt(stock):

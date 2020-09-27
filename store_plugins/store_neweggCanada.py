@@ -6,19 +6,20 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/5
 store_name = "New Egg Canada"
 
 
-url = "https://www.newegg.ca/GeForce-RTX-3080-3090/EventSaleStore/ID-10492"
+store_url = "https://www.newegg.ca/GeForce-RTX-3080-3090/EventSaleStore/ID-10492"
 
-#download the URL and extract the content to the variable html 
-request = urllib.request.Request(url,headers=headers)
-html = urllib.request.urlopen(request).read()
 
-#pass the HTML to Beautifulsoup.
-soup = BeautifulSoup(html,'html.parser')
-
-main_table = soup.find("div",attrs={'class':'item-cells-wrap'})
-cards = main_table.find_all("div", class_="item-container")
 
 def get_stock():
+    #download the URL and extract the content to the variable html 
+    request = urllib.request.Request(store_url,headers=headers)
+    html = urllib.request.urlopen(request).read()
+
+    #pass the HTML to Beautifulsoup.
+    soup = BeautifulSoup(html,'html.parser')
+
+    main_table = soup.find("div",attrs={'class':'item-cells-wrap'})
+    cards = main_table.find_all("div", class_="item-container")
     store = {
         'store_name': store_name,
         'has_stock': False,

@@ -6,18 +6,18 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/5
 store_name = "Memory Express"
 
 
-url = "https://www.memoryexpress.com/Category/VideoCards?FilterID=0c630011-395b-1ec2-cceb-96794781ab87"
+store_url = "https://www.memoryexpress.com/Category/VideoCards?FilterID=0c630011-395b-1ec2-cceb-96794781ab87"
 
-#download the URL and extract the content to the variable html 
-request = urllib.request.Request(url,headers=headers)
-html = urllib.request.urlopen(request).read()
-
-#pass the HTML to Beautifulsoup.
-soup = BeautifulSoup(html,'html.parser')
-main_table = soup.find("div",attrs={'data-role':'product-list-container'})
-cards = main_table.find_all("div",attrs={'class':'c-shca-icon-item'})
 
 def get_stock():
+    #download the URL and extract the content to the variable html 
+    request = urllib.request.Request(store_url,headers=headers)
+    html = urllib.request.urlopen(request).read()
+
+    #pass the HTML to Beautifulsoup.
+    soup = BeautifulSoup(html,'html.parser')
+    main_table = soup.find("div",attrs={'data-role':'product-list-container'})
+    cards = main_table.find_all("div",attrs={'class':'c-shca-icon-item'})
     baseurl = 'https://www.memoryexpress.com'
     store = {
         'store_name': store_name,

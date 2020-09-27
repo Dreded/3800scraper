@@ -1,29 +1,7 @@
 {% extends "base.jinja" %}
-{% block css %}
-        <meta http-equiv='refresh' content='20'>
+        {% block css %}
+            <meta http-equiv='refresh' content='20'>
 
-        <style>
-            body {
-                color: white;
-                background-color: black;
-            }
-            .button {
-                background-color: {% if audio == False %}green{% else %}red{% endif %}; /* #0099FF = Blue, #4CAF50 = green */
-                border: none;
-                color: white;
-                padding: 15px 32px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 16px;
-            }
-            .button:hover {
-                box-shadow: 0 12px 16px 0 rgba(FF,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-            }
-            .stocklist {
-                padding-left: 3
-            }
-        </style>
         {% endblock %}
     {% block navbaritems_AfterHome %}
       <li class="nav-item active">
@@ -47,7 +25,7 @@
                 </div>
             <div class="pl-3 pb-2">
                 <div class="subtitle">
-                    <hr data-content="Has Stock Of" class="hr-subtitle">
+                    <hr data-content="Has Stock Of - {{ store['stock']|length }}" class="hr-subtitle">
                 </div>
                 <ul>
                 {% if store['stock']|length > 0 %}
@@ -59,7 +37,7 @@
                 {% endif %}
                 </ul>
                 <div class="subtitle">
-                    <hr data-content="No Stock Of" class="hr-subtitle">
+                    <hr data-content="No Stock Of - {{ store['nostock']|length }}" class="hr-subtitle">
                 </div>
                 <ul>
                 {% if store['nostock']|length > 0 %}
