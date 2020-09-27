@@ -7,24 +7,55 @@ h2 {
     font-size: 1rem;
 }
 
-hr.hr-text {
+.storeTitle {
+    padding-bottom: 1.5rem;
+}
+hr.hr-title {
     position: relative;
-      border: none;
-      height: 2px;
-      background:#df691a;
+    border: none;
+    height: 0px;
+    background:#df691a;
   }
   
-  hr.hr-text::before {
-      content: attr(data-content);
-      display: inline-block;
-      background: rgb(71, 70, 70);
-      font-weight: bold;
-      font-size: 1rem;
-      color: #df691a;
-      border-radius: 30rem;
-      padding: 0.2rem 2rem;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+  hr.hr-title::before {
+    content: attr(data-content);
+    display: inline-block;
+    background: #3c3c3c;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #FFFFFF;
+    border-radius: 30rem;
+    padding: 0.2rem 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .subtitle {
+      padding-top: 1rem;
+  }
+
+  hr.hr-subtitle {
+    position: relative;
+    border: none;
+    height: 2px;
+    background:#df691a;
+  }
+  
+  hr.hr-subtitle::before {
+    width: 200px;
+    text-align: center;
+    z-index: -1;
+    content: attr(data-content);
+    display: inline-block;
+    background: #3c3c3c;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #df691a;
+    border-radius: 5px 50px;
+    padding: 0.2rem 2rem;
+    position: absolute;
+    top: -23px;
+    left: -50px;
   }

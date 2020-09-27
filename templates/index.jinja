@@ -33,7 +33,9 @@
         {% block main %}
         {% for store in stores.values() %}
         <div class="pt-3">
-                <hr data-content="{{store['store_name']}}" class="hr-text">
+            <div class="storeTitle">
+                <hr data-content="{{store['store_name']}}" class="hr-title">
+            </div>
                 {% if store['has_stock'] %}
                     {% if audio %}
                         <audio autoplay>
@@ -43,8 +45,10 @@
                     <span> - <b>Has Stock</b></span>
                 {% endif %}
                 </div>
-            <div class="pl-3">
-            <h2>Has Stock of...</h2>
+            <div class="pl-3 pb-2">
+                <div class="subtitle">
+                    <hr data-content="Has Stock Of" class="hr-subtitle">
+                </div>
                 <ul>
                 {% if store['stock']|length > 0 %}
                     {% for card in store['stock'] %}
@@ -54,8 +58,9 @@
                     <li>Nothing</li>
                 {% endif %}
                 </ul>
-
-                <h2>Has No Stock of...</h2>
+                <div class="subtitle">
+                    <hr data-content="No Stock Of" class="hr-subtitle">
+                </div>
                 <ul>
                 {% if store['nostock']|length > 0 %}
                     {% for card in store['nostock'] %}
